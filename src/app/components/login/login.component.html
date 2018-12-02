@@ -1,3 +1,12 @@
-<p>
-  login works!
-</p>
+<form class="form-signin" (submit)="onSubmitLogin()">
+    <img class="mb-4" src="assets/upmlogo.png" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+    <label for="userLogin" class="sr-only">User</label>
+    <input type="text" id="userLogin" name="userLogin" [(ngModel)] = "user"  class="form-control" placeholder="User" required="true" autofocus="true">
+    <label for="passwordLogin" class="sr-only">Password</label>
+    <input type="password" id="passwordLogin" name="passwordLogin" [(ngModel)] = "password" class="form-control" placeholder="Password" required="true">
+    <div class="mb-4" >
+      <h6 class="hidden alert-danger" *ngIf="invalidUser">Usuario/password no válido</h6>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+  </form>

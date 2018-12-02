@@ -7,6 +7,7 @@ import { InstalacionesComponent } from './components/instalaciones/instalaciones
 import { ReservarComponent } from './components/reservar/reservar.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { LoginComponent } from './components/login/login.component';
+import { NotFoundComponent } from './components/commons/not-found/not-found.component';
 
 const routes: Routes = [
   {path: "", component: InicioComponent },
@@ -15,7 +16,7 @@ const routes: Routes = [
   {path: "reservar", component: ReservarComponent },
   {path: "registro", component: RegistroComponent /* ,canActivate: [AuthGuard]*/ },
   {path: "login", component: LoginComponent /* ,canActivate: [AuthGuard]*/ },
-  // {path: '**', component: NotFoundComponent },
+  {path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

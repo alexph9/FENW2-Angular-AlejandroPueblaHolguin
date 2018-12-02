@@ -2,6 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { CarouselModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
+import { FormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+
+//Services
+import { AuthService } from './shared/services/auth/auth.service'
 
 //Components
 import { AppComponent } from './app.component';
@@ -12,6 +17,7 @@ import { InstalacionesComponent } from './components/instalaciones/instalaciones
 import { ReservarComponent } from './components/reservar/reservar.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { LoginComponent } from './components/login/login.component';
+import { NotFoundComponent } from './components/commons/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -22,17 +28,19 @@ import { LoginComponent } from './components/login/login.component';
     InstalacionesComponent,
     ReservarComponent,
     RegistroComponent,
-    LoginComponent
+    LoginComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CarouselModule.forRoot(),
     WavesModule.forRoot(), 
-    ButtonsModule
-
+    ButtonsModule,
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

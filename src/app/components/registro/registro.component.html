@@ -1,16 +1,27 @@
-  <form class="form-signin">
+  <form class="form-signin" (submit)="onSubmitRegistro()">
       <h1 class="h3 mb-3 font-weight-normal">Registro</h1>
+
       <label for="userRegistro" class="sr-only">User</label>
-      <input type="text" id="userRegistro" class="form-control" placeholder="User" required="true" autofocus="true">
+      <input type="text" id="userRegistro" name="userRegistro" class="form-control" [(ngModel)] = "username" (blur)="onBlurUser()" placeholder="User" required="true" autofocus="true">
+      
       <label for="emailRegistro" class="sr-only">Email</label>
-      <input type="email" id="emailRegistro" class="form-control" placeholder="Email" required="true" autofocus="">
+      <input type="email" id="emailRegistro" name="emailRegistro" class="form-control" [(ngModel)] = "email" placeholder="Email" required="true" autofocus="">
+      
       <label for="passwordRegistro" class="sr-only">Password</label>
-      <input type="password" id="passwordRegistro" class="form-control" maxlength="8" placeholder="Password" required="true">
+      <input type="password" id="passwordRegistro" name="passwordRegistro" class="form-control" [(ngModel)] = "password" maxlength="8" placeholder="Password" required="true">
+      
       <label for="RepetirPasswordRegistro" class="sr-only">Repita la Password</label>
-      <input type="password" id="RepetirPasswordRegistro" class="form-control" maxlength="8" placeholder="Repita la Password"
+      <input type="password" id="RepetirPasswordRegistro" (blur) = "onBlurPassword()" name="RepetirPasswordRegistro" class="form-control" [(ngModel)] = "passwordRepetida" maxlength="8" placeholder="Repita la Password"
         required="true">
+      
       <label for="fechaRegistro" class="sr-only">Fecha de Nacimiento</label>
-      <input type="date" id="fechaRegistro" class="form-control" placeholder="Fecha de nacimiento" required="true">
-      <div class="mb-4"></div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      <input type="date" id="fechaRegistro" name="fechaRegistro" class="form-control" [(ngModel)] = "date" placeholder="Fecha de nacimiento">
+      
+      <div class="mb-4" >
+        <h6 class="hidden alert-danger" *ngIf="existUser">El usuario ya existe</h6>
+      </div>
+      <div class="mb-4" >
+        <h6 class="hidden alert-danger" *ngIf="differentPasswords">La password no coincide</h6>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Registrar</button>
     </form>

@@ -1,6 +1,6 @@
 import { Injectable, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { user } from '../../models/user.model';
 
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Observable, Subject } from 'rxjs';
 export class AuthService {
   
   private baseurl: string = "http://fenw.etsisi.upm.es:5555";
-  private loginEndpoint: string = "/users/login";
+  private USERS: string = "/users";
   private token: string;
   private isUserLogged: boolean;
   @Output() userLogged: EventEmitter<any> = new EventEmitter();
@@ -28,7 +28,7 @@ export class AuthService {
   login(username: string, password: string){
     const promise = new Promise((resolve, reject) => {
       resolve(this.http.get<any>(
-        `${this.baseurl}${this.loginEndpoint}?username=${username}&password=${password}`,
+        `${this.baseurl}${this.USERS}/login?username=${username}&password=${password}`,
         {observe: 'response'}).toPromise());
     });
     return promise;
@@ -42,6 +42,23 @@ export class AuthService {
   logout(){
     sessionStorage.clear();
     this.emitSessionToken();
+  }
+
+  getEspecificUser(username: string){
+    const promise = new Promise((resolve, reject) => {
+      resolve(this.http.get(
+        `${this.baseurl}${this.USERS}/${username}`,
+        {observe: 'response'}).toPromise());
+    });
+    return promise;
+  }
+
+  register(person: user){
+    const promise = new Promise((resolve, reject) => {
+      resolve(
+        this.http.post(`${this.baseurl}${this.USERS}`, person).toPromise());
+    });
+    return promise;
   }
 
 }

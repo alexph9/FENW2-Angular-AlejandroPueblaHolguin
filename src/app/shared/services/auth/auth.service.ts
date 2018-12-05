@@ -1,6 +1,7 @@
 import { Injectable, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { user } from '../../models/user.model';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -11,13 +12,17 @@ export class AuthService {
   private baseurl: string = "http://fenw.etsisi.upm.es:5555";
   private USERS: string = "/users";
   private token: string;
-  private isUserLogged: boolean;
+  private hasUserLogged: boolean = false;
   @Output() userLogged: EventEmitter<any> = new EventEmitter();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public router: Router) { }
 
   isValidUser(username: string, password: string){
     return (username !== '' && password !== '');
+  }
+
+  isUserLogged(){
+    return this.hasUserLogged;
   }
 
   emitSessionToken(){ 
@@ -36,12 +41,15 @@ export class AuthService {
 
   saveToken(accessToken: string){
     sessionStorage.setItem("Authorization", accessToken);
+    this.hasUserLogged = true;
     this.emitSessionToken();
   }
 
   logout(){
     sessionStorage.clear();
+    this.hasUserLogged = false;
     this.emitSessionToken();
+    this.router.navigate(['/login']);
   }
 
   getEspecificUser(username: string){

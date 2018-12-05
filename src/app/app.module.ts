@@ -7,6 +7,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 //Services
 import { AuthService } from './shared/services/auth/auth.service'
+import { AuthGuard } from './shared/guards/auth/auth.guard';
 
 //Components
 import { AppComponent } from './app.component';
@@ -40,7 +41,7 @@ import { NotFoundComponent } from './components/commons/not-found/not-found.comp
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

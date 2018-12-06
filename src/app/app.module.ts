@@ -4,11 +4,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { CarouselModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 
 //Services
 import { AuthService } from './shared/services/auth/auth.service'
 import { AuthGuard } from './shared/guards/auth/auth.guard';
+import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
+import { ReservaService} from './shared/services/reserva/reserva.service'
+
 
 //Components
 import { AppComponent } from './app.component';
@@ -43,7 +45,7 @@ import { NotFoundComponent } from './components/commons/not-found/not-found.comp
     HttpClientModule,
     FlashMessagesModule
   ],
-  providers: [AuthService, AuthGuard, FlashMessagesService],
+  providers: [AuthService, AuthGuard, FlashMessagesService, ReservaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

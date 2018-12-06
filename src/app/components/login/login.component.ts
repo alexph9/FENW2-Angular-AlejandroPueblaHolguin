@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     if(this.authService.isValidUser(this.user, this.password)){
       this.authService.login(this.user, this.password)
       .then(res => {
-        this.token = res;
+        this.token = res.headers.get('Authorization');
         this.authService.saveToken(this.token);
         this.flashMessage.show(`¡Bienvenido ${this.user}!`,
           { cssClass: 'alert-success', timeout: 3500 });
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       })
       .catch(error => {
         this.flashMessage.show(`Usuario no válido`,
-          { cssClass: 'alert-success', timeout: 3500 });
+          { cssClass: 'alert-danger', timeout: 3500 });
         this.invalidUser = true;
       });
     }

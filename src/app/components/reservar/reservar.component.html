@@ -1,3 +1,65 @@
-<p>
-  reservar works!
-</p>
+<form class="form-signin" *ngIf="!hasDaySelected" (submit)="onSubmitGetPistas()">
+    <h4>Reserva cancha de Basket</h4>
+    <p>Elija un día para ver las pistas disponibles</p>
+    <label for="fechaRegistro" class="sr-only">Día para reservar</label>
+    <input type="date" id="fechaRegistro" name="fechaRegistro" class="form-control" [(ngModel)]="date" placeholder="Fecha de nacimiento">
+    <div class="mb-4"></div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">OK</button>
+</form>
+<div *ngIf="hasDaySelected">
+        <h3 class="date">{{reservations["0"].rsvday}}</h3>
+    <div class="container">
+        <div class="row">
+            <table class="table col table-primary">
+                <tr>
+                    <th>Cancha 1</th>
+                </tr>
+                <tr *ngFor="let reserve of reservations">
+                    <td *ngIf="reserve.courtId === 1">
+                        {{ reserve.rsvtime }}
+                        <input *ngIf="reserve.courtId === 1" type="radio" id="reserve.rsvId" name="reserva">
+                    </td>
+                </tr>
+            </table>
+            <table class="table col table-success">
+                <tr>
+                    <th>Cancha 2</th>
+                </tr>
+                <tr *ngFor="let reserve of reservations">
+                    <td *ngIf="reserve.courtId === 2">
+                        {{ reserve.rsvtime }}
+                        <input *ngIf="reserve.courtId === 2" type="radio" id="reserve.rsvId" name="reserva">
+                    </td>
+                </tr>
+            </table>
+            <table class=" table col table-warning">
+                <tr>
+                    <th>Cancha 3</th>
+                </tr>
+                <tr *ngFor="let reserve of reservations">
+                    <td *ngIf="reserve.courtId === 3">
+                        {{ reserve.rsvtime }}
+                        <input *ngIf="reserve.courtId === 3" type="radio" id="reserve.rsvId" name="reserva">
+                    </td>
+                </tr>
+            </table>
+            <table class=" table col table-danger">
+                <tr>
+                    <th>Cancha 4</th>
+                </tr>
+                <tr *ngFor="let reserve of reservations">
+                    <td *ngIf="reserve.courtId === 4">
+                        {{ reserve.rsvtime }}
+                        <input *ngIf="reserve.courtId === 4" type="radio" id="reserve.rsvId" name="reserva">
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="btn btn-lg btn-primary btn-block" type="button" (click)="return()">Reservar</button>
+        <button class="btn btn-lg btn-primary btn-block" type="button" (click)="return()">Atrás</button>
+    </div>
+
+</div>

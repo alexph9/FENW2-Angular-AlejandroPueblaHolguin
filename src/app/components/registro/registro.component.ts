@@ -31,13 +31,10 @@ export class RegistroComponent implements OnInit {
   }
 
   onBlurUser(){
-    console.log(this.username);
     this.authService.getEspecificUser(this.username).then(res => {
       this.existUser = true;
-      console.log(true);
     })
     .catch(error => {
-      console.log(false);
       this.existUser = false;
     });
   }
@@ -52,14 +49,16 @@ export class RegistroComponent implements OnInit {
     this.myUser.password = this.password;
     if(this.date !== undefined){
       let myDate = this.date.split("-");
-      this.birthdate = new Date(Number(myDate[0]), Number(myDate[0])-1, Number(myDate[0])); // Año, mes, día
+      let year = parseInt(myDate[0]);
+      let month = parseInt(myDate[1])-1;
+      let day = parseInt(myDate[2]);
+      this.birthdate = new Date(year, month, day);
       this.myUser.birthdate = this.birthdate.getTime();
     }
 
   }
 
   onSubmitRegistro(){
-    console.log(this.username)
     if(!this.existUser && !this.differentPasswords && this.username !== undefined
       && this.password !== undefined && this.email !== undefined){
       this.inicializaUser();
@@ -71,7 +70,7 @@ export class RegistroComponent implements OnInit {
       })
       .catch(error => {
         this.flashMessage.show('Ha habido un problema, vuelva a intentarlo',
-          { cssClass: 'alert-success', timeout: 3500 });
+          { cssClass: 'alert-danger', timeout: 3500 });
         this.username = '';
         this.email = '';
         this.password = '';

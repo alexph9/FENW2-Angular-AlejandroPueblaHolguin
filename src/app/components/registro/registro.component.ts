@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/services/auth/auth.service'
 import { Router } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { user } from '../../shared/models/user.model';
 
 @Component({
@@ -22,7 +23,8 @@ export class RegistroComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    public router: Router
+    public router: Router,
+    public flashMessage: FlashMessagesService
     ) { }
 
   ngOnInit() {
@@ -57,14 +59,19 @@ export class RegistroComponent implements OnInit {
   }
 
   onSubmitRegistro(){
-    if(!this.existUser && !this.differentPasswords){
+    console.log(this.username)
+    if(!this.existUser && !this.differentPasswords && this.username !== undefined
+      && this.password !== undefined && this.email !== undefined){
       this.inicializaUser();
       this.authService.register(this.myUser)
       .then(res => {
-        console.log(res);
+        this.flashMessage.show('El usuario fue creado correctamente',
+          { cssClass: 'alert-success', timeout: 3500 });
         this.router.navigate(['/login']);
       })
       .catch(error => {
+        this.flashMessage.show('Ha habido un problema, vuelva a intentarlo',
+          { cssClass: 'alert-success', timeout: 3500 });
         this.username = '';
         this.email = '';
         this.password = '';

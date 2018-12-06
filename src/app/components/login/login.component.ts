@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/services/auth/auth.service'
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    public router: Router
+    public router: Router,
+    public flashMessage: FlashMessagesService
     ) { }
 
   ngOnInit() {
@@ -27,9 +29,13 @@ export class LoginComponent implements OnInit {
       .then(res => {
         this.token = res;
         this.authService.saveToken(this.token);
+        this.flashMessage.show(`¡Bienvenido ${this.user}!`,
+          { cssClass: 'alert-success', timeout: 3500 });
         this.router.navigate(['/reservar']);
       })
       .catch(error => {
+        this.flashMessage.show(`Usuario no válido`,
+          { cssClass: 'alert-success', timeout: 3500 });
         this.invalidUser = true;
       });
     }

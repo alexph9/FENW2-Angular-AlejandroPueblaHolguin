@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CarouselModule, WavesModule, ButtonsModule } from 'angular-bootstrap-md';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { FlashMessagesModule, FlashMessagesService } from 'angular2-flash-messages';
 
 //Services
 import { AuthService } from './shared/services/auth/auth.service'
@@ -39,9 +40,10 @@ import { NotFoundComponent } from './components/commons/not-found/not-found.comp
     WavesModule.forRoot(), 
     ButtonsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FlashMessagesModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, FlashMessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

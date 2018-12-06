@@ -2,17 +2,17 @@
       <h1 class="h3 mb-3 font-weight-normal">Registro</h1>
 
       <label for="userRegistro" class="sr-only">User</label>
-      <input type="text" id="userRegistro" name="userRegistro" class="form-control" [(ngModel)] = "username" (blur)="onBlurUser()" placeholder="User" required="true" autofocus="true">
+      <input type="text" id="userRegistro" name="userRegistro" maxlength="8" class="form-control" [(ngModel)] = "username" (blur)="onBlurUser()" placeholder="User" required autofocus="true">
       
       <label for="emailRegistro" class="sr-only">Email</label>
-      <input type="email" id="emailRegistro" name="emailRegistro" class="form-control" [(ngModel)] = "email" placeholder="Email" required="true" autofocus="">
+      <input type="email" id="emailRegistro" name="emailRegistro" class="form-control" [(ngModel)] = "email" placeholder="Email" required autofocus="">
       
       <label for="passwordRegistro" class="sr-only">Password</label>
-      <input type="password" id="passwordRegistro" name="passwordRegistro" class="form-control" [(ngModel)] = "password" maxlength="8" placeholder="Password" required="true">
+      <input type="password" id="passwordRegistro" (blur) = "onBlurPassword()" name="passwordRegistro" class="form-control" [(ngModel)] = "password" maxlength="8" placeholder="Password" required>
       
       <label for="RepetirPasswordRegistro" class="sr-only">Repita la Password</label>
       <input type="password" id="RepetirPasswordRegistro" (blur) = "onBlurPassword()" name="RepetirPasswordRegistro" class="form-control" [(ngModel)] = "passwordRepetida" maxlength="8" placeholder="Repita la Password"
-        required="true">
+        required>
       
       <label for="fechaRegistro" class="sr-only">Fecha de Nacimiento</label>
       <input type="date" id="fechaRegistro" name="fechaRegistro" class="form-control" [(ngModel)] = "date" placeholder="Fecha de nacimiento">

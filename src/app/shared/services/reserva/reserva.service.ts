@@ -23,4 +23,15 @@ export class ReservaService {
     });
     return promise;
   };
+
+  saveReservation(reservation: any){
+    const promise = new Promise((resolve, reject) => {
+      resolve(this.http.post<Reserva>(
+        `${this.baseurl}${this.RESERVATIONS}`, {
+          reservation,
+          headers: new HttpHeaders({'Authorization': sessionStorage.getItem('Authorization')})
+        }).toPromise());
+    });
+    return promise;
+  };
 }

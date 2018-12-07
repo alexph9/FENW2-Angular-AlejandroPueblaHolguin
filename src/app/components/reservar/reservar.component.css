@@ -15,17 +15,6 @@
     margin-top: 3em;
 }
 
-.buttons{
-    max-width: 330px;
-    margin: auto;
-    text-align: center!important;
-    width: 100%;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-}
-
 .date{
     max-width: 330px;
     margin: auto;

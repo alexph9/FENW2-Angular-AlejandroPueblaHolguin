@@ -25,13 +25,17 @@ export class ReservaService {
   };
 
   saveReservation(reservation: any){
+    const headers = new HttpHeaders()
+          .set("Content-Type", "application/json")
+          .set("Authorization", sessionStorage.getItem('Authorization'));
     const promise = new Promise((resolve, reject) => {
-      resolve(this.http.post<Reserva>(
-        `${this.baseurl}${this.RESERVATIONS}`, {
+      resolve(
+        this.http.post(
+          `${this.baseurl}${this.RESERVATIONS}`,
           reservation,
-          headers: new HttpHeaders({'Authorization': sessionStorage.getItem('Authorization')})
-        }).toPromise());
-    });
+          {headers}
+        ).toPromise());
+    })
     return promise;
   };
 }

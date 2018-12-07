@@ -67,7 +67,7 @@ export class RegistroComponent implements OnInit {
         res => {
           this.flashMessage.show('El usuario fue creado correctamente',
             { cssClass: 'alert-success', timeout: 3500 });
-          this.router.navigate(['/login']);
+          this.authService.logout();
         },
         error => {
           this.flashMessage.show('Ha habido un problema, vuelva a intentarlo',

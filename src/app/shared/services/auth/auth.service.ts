@@ -31,12 +31,9 @@ export class AuthService {
   }
 
   login(username: string, password: string){
-    const promise = new Promise((resolve, reject) => {
-      resolve(this.http.get<any>(
+    return this.http.get<any>(
         `${this.baseurl}${this.USERS}/login?username=${username}&password=${password}`,
-        {observe: 'response'}).toPromise());
-    });
-    return promise;
+        {observe: 'response'});
   }
 
   saveToken(accessToken: string){
@@ -53,20 +50,13 @@ export class AuthService {
   }
 
   getEspecificUser(username: string){
-    const promise = new Promise((resolve, reject) => {
-      resolve(this.http.get(
+    return this.http.get(
         `${this.baseurl}${this.USERS}/${username}`,
-        {observe: 'response'}).toPromise());
-    });
-    return promise;
+        {observe: 'response'});
   }
 
   register(person: user){
-    const promise = new Promise((resolve, reject) => {
-      resolve(
-        this.http.post(`${this.baseurl}${this.USERS}`, person).toPromise());
-    });
-    return promise;
+    return this.http.post(`${this.baseurl}${this.USERS}`, person);
   }
 
 }

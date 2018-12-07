@@ -48,20 +48,21 @@ export class ReservarComponent implements OnInit {
         this.flashMessage.show(`No puedes reservar para el ${this.especificDay}.\n Se trata de una fecha pasada.`,
           { cssClass: 'alert-danger', timeout: 3500 });
       } else {
-        this.reservaService.getPistas(this.reservaDate.getTime())
-          .then(res => {
+        this.reservaService.getPistas(this.reservaDate.getTime()).subscribe(
+          (res: any) => {
             this.hasDaySelected = true;
             this.reservations = res.body;
             this.initializeFreeHours(this.reservations, this.especificDay);
             this.token = res.headers.get('Authorization');
             this.authService.saveToken(this.token);
-          })
-          .catch(error => {
+          },
+          error => {
             this.flashMessage.show('Usuario inválido',
               { cssClass: 'alert-danger', timeout: 3500 });
             sessionStorage.clear();
             this.router.navigate(['/login']);
-          });
+          }
+        );
       }
 
     } else {
@@ -85,13 +86,14 @@ export class ReservarComponent implements OnInit {
         'courtid': courtId,
         'rsvdatetime': rsvdateTime.getTime()
       }
-      this.reservaService.saveReservation(reservation)
-        .then(res => {
+      this.reservaService.saveReservation(reservation).subscribe(
+        res => {
           this.flashMessage
             .show(`Reserva para la pista ${this.actualCourtId} el día ${this.especificDay} a las ${this.actualRsvTime} realizada.`,
               { cssClass: 'alert-success', timeout: 4000 });
           this.router.navigate(['/']);
-        }).catch(err => {
+        },
+        err => {
           this.flashMessage
             .show(`${err.error}`,
               { cssClass: 'alert-danger', timeout: 3500 });

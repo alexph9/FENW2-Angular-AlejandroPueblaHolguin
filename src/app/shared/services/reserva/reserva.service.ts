@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpHeaders } from '@angular/common/http';
-import { Reserva } from '../../models/reserva.model';
-import { Observable } from 'rxjs';
 
 
 @Injectable({

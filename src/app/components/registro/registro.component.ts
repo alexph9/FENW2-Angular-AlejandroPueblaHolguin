@@ -70,8 +70,26 @@ export class RegistroComponent implements OnInit {
           this.authService.logout();
         },
         error => {
-          this.flashMessage.show('Ha habido un problema, vuelva a intentarlo',
-            { cssClass: 'alert-danger', timeout: 3500 });
+          switch (error.status) {
+            case 400: {
+              this.flashMessage
+                .show(`No username o password.`,
+                  { cssClass: 'alert-danger', timeout: 3500 });
+              break;
+            }
+            case 409: {
+              this.flashMessage
+                .show(`Usuario ya existe`,
+                  { cssClass: 'alert-danger', timeout: 3500 });
+              break;
+            }
+            default: {
+              this.flashMessage
+                .show(`Uups! Algo ha ido mal. Vuelva a intentarlo más tarde.`,
+                  { cssClass: 'alert-danger', timeout: 3500 }); 
+              break;
+            }
+          }
           this.username = '';
           this.email = '';
           this.password = '';

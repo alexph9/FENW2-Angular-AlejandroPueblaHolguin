@@ -42,9 +42,10 @@ export class ReservarComponent implements OnInit {
       this.year = parseInt(myDate[0]);
       this.month = parseInt(myDate[1]) - 1;
       this.day = parseInt(myDate[2]);
+      const TWENTY_HOURS_IN_MS = 72000000;
       this.reservaDate = new Date(this.year, this.month, this.day);
       this.especificDay = `${this.day}/${this.month + 1}/${this.year}`
-      if (this.reservaDate.getTime() < Date.now()) {
+      if (this.reservaDate.getTime() < Date.now() - TWENTY_HOURS_IN_MS ) {
         this.flashMessage.show(`No puedes reservar para el ${this.especificDay}.\n Se trata de una fecha pasada.`,
           { cssClass: 'alert-danger', timeout: 3500 });
       } else {
@@ -57,10 +58,21 @@ export class ReservarComponent implements OnInit {
             this.authService.saveToken(this.token);
           },
           error => {
-            this.flashMessage.show('Usuario inválido',
-              { cssClass: 'alert-danger', timeout: 3500 });
-            sessionStorage.clear();
-            this.router.navigate(['/login']);
+            switch (error.status) {
+              case 401: {
+                this.flashMessage
+                  .show(`Sesión expirada.`,
+                    { cssClass: 'alert-danger', timeout: 3500 });
+                this.authService.logout();
+                break;
+              }
+              default: {
+                this.flashMessage
+                  .show(`Uups! Algo ha ido mal. Vuelva a intentarlo más tarde.`,
+                    { cssClass: 'alert-danger', timeout: 3500 });
+                break;
+              }
+            }
           }
         );
       }
@@ -94,10 +106,36 @@ export class ReservarComponent implements OnInit {
           this.router.navigate(['/']);
         },
         err => {
-          this.flashMessage
-            .show(`${err.error}`,
-              { cssClass: 'alert-danger', timeout: 3500 });
-          this.back();
+          switch (err.status) {
+            case 400: {
+              this.flashMessage
+                .show(`La pista o el día no son validos.`,
+                  { cssClass: 'alert-danger', timeout: 3500 });
+              this.back();
+              break;
+            }
+            case 401: {
+              this.flashMessage
+                .show(`Sesión expirada.`,
+                  { cssClass: 'alert-danger', timeout: 3500 });
+              this.authService.logout();
+              break;
+            }
+            case 409: {
+              this.flashMessage
+                .show(`Ya ha realizado reserva un máximo de 4 veces.`,
+                  { cssClass: 'alert-danger', timeout: 3500 });
+              this.router.navigate(['/']);
+              break;
+            }
+            default: {
+              this.flashMessage
+                .show(`Uups! Algo ha ido mal. Vuelva a intentarlo más tarde.`,
+                  { cssClass: 'alert-danger', timeout: 3500 });
+              this.back();
+              break;
+            }
+          }
         });
     } else {
       this.flashMessage.show(`Elija una pista y una hora para reservar`,

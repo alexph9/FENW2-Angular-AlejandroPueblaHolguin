@@ -34,8 +34,26 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/reservar']);
         }, 
         error => {
-          this.flashMessage.show(`Usuario no válido`,
-          { cssClass: 'alert-danger', timeout: 3500 });
+          switch (error.status) {
+            case 400: {
+              this.flashMessage
+                .show(`No username o password.`,
+                  { cssClass: 'alert-danger', timeout: 3500 });
+              break;
+            }
+            case 401: {
+              this.flashMessage
+                .show(`Usuario o password inválidos`,
+                  { cssClass: 'alert-danger', timeout: 3500 });
+              break;
+            }
+            default: {
+              this.flashMessage
+                .show(`Uups! Algo ha ido mal. Vuelva a intentarlo más tarde.`,
+                  { cssClass: 'alert-danger', timeout: 3500 }); 
+              break;
+            }
+          }
         this.invalidUser = true;
         });
     }
